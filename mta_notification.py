@@ -83,4 +83,5 @@ message = client.messages.create(
                               to= #REPLACE WITH YOUR PHONE NUMBER
                           )
 
-#print(message.sid)
+# print(message.sid)
+# str(datetime.datetime.now().time()).split('.')[0] - get time now
