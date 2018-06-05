@@ -3,7 +3,7 @@ import requests
 import time # imports module for Epoch/GMT time conversion
 import os # imports package for dotenv
 
-api_key = #ENTER API KEY
+api_key = #REPLACE WITH MTA API KEY
 
 # Requests subway status data feed from City of New York MTA API
 feed = gtfs_realtime_pb2.FeedMessage()
@@ -53,6 +53,7 @@ second_arrival_time = collected_times[1]
 current_time = int(time.time())
 time_until_train = int(((nearest_arrival_time - current_time) / 60))
 
+msg = ""
 # This final part of the code checks the time to arrival and prints a few
 # different messages depending on the circumstance
 if time_until_train > 3:
@@ -67,3 +68,19 @@ else:
     print(msg)
 
 
+# Send an SMS
+
+from twilio.rest import Client
+
+# Your Account Sid and Auth Token from twilio.com/console
+account_sid = #Enter Account SID
+auth_token = #Enter Auth Token
+client = Client(account_sid, auth_token)
+
+message = client.messages.create(
+                              body=msg,
+                              from_= #REPLACE WITH YOUR TWILIO NUMBER,
+                              to= #REPLACE WITH YOUR PHONE NUMBER
+                          )
+
+#print(message.sid)
