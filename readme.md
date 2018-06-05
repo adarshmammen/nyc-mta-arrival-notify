@@ -1,5 +1,6 @@
 **Introduction**
 ------------
+# Credit to neoterix
 
 This a basic python script that reads the NYC MTA realtime feed API for subway data and outputs when the next arrival is for a given station. The output can be redirected as a text message using Twilio's API. 
 
