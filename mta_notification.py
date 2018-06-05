@@ -2,12 +2,8 @@ from google.transit import gtfs_realtime_pb2
 import requests
 import time # imports module for Epoch/GMT time conversion
 import os # imports package for dotenv
-from dotenv import load_dotenv, find_dotenv # imports module for dotenv
-load_dotenv(find_dotenv()) # loads .env from root directory
 
-# The root directory requires a .env file with API_KEY assigned/defined within
-# and dotenv installed from pypi. Get API key from http://datamine.mta.info/user
-api_key = os.environ['API_KEY']
+api_key = #ENTER API KEY
 
 # Requests subway status data feed from City of New York MTA API
 feed = gtfs_realtime_pb2.FeedMessage()
@@ -60,27 +56,14 @@ time_until_train = int(((nearest_arrival_time - current_time) / 60))
 # This final part of the code checks the time to arrival and prints a few
 # different messages depending on the circumstance
 if time_until_train > 3:
-    print(f"""
-It's currently {time.strftime("%I:%M %p")}
-The next Brooklyn-bound B/D train from
-Broadway-Lafayette Station arrives in
-{time_until_train} minutes at {time.strftime("%I:%M %p", time.localtime(nearest_arrival_time))}""")
+
+    msg = "The next Brooklyn-bound B/D train from Broadway-Lafayette Station arrives in {0} minutes at {1}".format(time_until_train,time.strftime('%H:%M:%S %Z',time.localtime(nearest_arrival_time)))
+    print(msg)
 elif time_until_train <= 0:
-    print(f"""
-Welp... You *just* missed the train. (╯°□°）╯︵ ┻━┻
-Ah well, the next train will arrive at {time.strftime("%I:%M %p", time.localtime(second_arrival_time))}""")
+    msg = "You *just* missed the train. the next train will arrive at {0}".format(time.strftime('%H:%M:%S %Z',time.localtime(second_arrival_time)))
+    print(msg)
 else:
-    print(f"""
-HURRY UP YOU HAVE {time_until_train} MINUTES TO GET TO
-BROADWAY-LAFAYETTE IF YOU WANT TO GET HOME!
-THE TRAIN GETS IN AT {time.strftime("%I:%M %p", time.localtime(nearest_arrival_time))}""")
+    msg = "HURRY UP YOU HAVE {0} MINUTES TO GET TO BROADWAY-LAFAYETTE IF YOU WANT TO GET HOME! THE TRAIN GETS IN AT {1}".format(time_until_train,time.strftime('%H:%M:%S %Z',time.localtime(nearest_arrival_time)))
+    print(msg)
 
 
-# These are useful print statments used for script debugging, commented out
-#
-# for times in collected_times:
-#     print(times, "=", time.strftime("%I:%M %p", time.localtime(times)))
-# print(collected_times)
-# print(nearest_arrival_time)
-# print(second_arrival_time)
-# print(time_until_train)
